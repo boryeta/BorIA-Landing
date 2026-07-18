@@ -64,8 +64,11 @@ tocar configuración). En el panel de Cloudflare:
 
 Detalles ya incluidos en el repo:
 - `.node-version` → `22` (fija la versión de Node del build).
-- `public/_redirects` → fallback SPA (`/* /index.html 200`).
 - `public/_headers` → cache larga para assets con hash.
+
+> Nota: es una web de una sola página (los enlaces son anclas `#seccion`, no
+> rutas), así que no lleva `_redirects`. En Cloudflare Workers static assets un
+> catch-all `/* /index.html 200` da error de bucle; no es necesario aquí.
 
 ## Decisiones de diseño
 
