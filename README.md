@@ -47,6 +47,26 @@ src/
 └─ index.css         # Tokens CSS, utilidades y prefers-reduced-motion
 ```
 
+## Despliegue en Cloudflare Pages
+
+El repo ya está listo para Cloudflare Pages con integración Git (no hace falta
+tocar configuración). En el panel de Cloudflare:
+
+1. **Workers & Pages → Create → Pages → Connect to Git** y elige
+   `boryeta/BorIA-Landing`.
+2. Configura el build:
+   - **Production branch**: la rama que quieras publicar (p. ej. `main` o
+     `claude/epic-clarke-j5l5ff`).
+   - **Framework preset**: `Vite` (o *None*).
+   - **Build command**: `npm run build`
+   - **Build output directory**: `dist`
+3. **Save and Deploy**. Cada push a esa rama reconstruye y publica solo.
+
+Detalles ya incluidos en el repo:
+- `.node-version` → `22` (fija la versión de Node del build).
+- `public/_redirects` → fallback SPA (`/* /index.html 200`).
+- `public/_headers` → cache larga para assets con hash.
+
 ## Decisiones de diseño
 
 - **Color con propósito narrativo**: índigo = en construcción, terracota =
