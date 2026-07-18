@@ -41,7 +41,7 @@ export function Philosophy() {
 
         <div className="space-y-10 md:space-y-16">
           {VALUES.map((v, i) => (
-            <ValueLine key={i} lead={v.lead} rest={v.rest} />
+            <ValueLine key={i} index={i} lead={v.lead} rest={v.rest} />
           ))}
         </div>
       </div>
@@ -49,8 +49,16 @@ export function Philosophy() {
   );
 }
 
-function ValueLine({ lead, rest }: { lead: string; rest: string }) {
-  const ref = useRef<HTMLParagraphElement>(null);
+function ValueLine({
+  index,
+  lead,
+  rest,
+}: {
+  index: number;
+  lead: string;
+  rest: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
 
   useEffect(() => {
@@ -85,32 +93,44 @@ function ValueLine({ lead, rest }: { lead: string; rest: string }) {
   }, [reduced]);
 
   return (
-    <p
+    <div
       ref={ref}
-      className="value-line max-w-4xl text-balance font-serif text-3xl font-light leading-tight tracking-tightest transition-colors sm:text-4xl md:text-6xl"
-      style={
-        {
-          '--hl': '0',
-          color: 'rgb(132 123 110 / calc(0.55 + var(--hl) * 0.45))',
-        } as React.CSSProperties
-      }
+      className="group flex items-start gap-5 md:gap-8"
+      style={{ '--hl': '0' } as React.CSSProperties}
     >
-      <span
-        style={{
-          color: 'rgb(244 239 230 / calc(0.4 + var(--hl) * 0.6))',
-        }}
-      >
-        {lead}
-      </span>{' '}
-      <span
-        className="italic"
-        style={{
-          color:
-            'color-mix(in srgb, #e08a63 calc(var(--hl) * 100%), #847b6e)',
-        }}
-      >
-        {rest}
-      </span>
-    </p>
+      {/* Marcador: índice mono + tick que se enciende con el highlight */}
+      <div className="flex shrink-0 select-none flex-col items-center pt-2 md:pt-4">
+        <span
+          className="font-mono text-xs tracking-[0.1em]"
+          style={{ color: 'rgb(154 160 255 / calc(0.3 + var(--hl) * 0.7))' }}
+        >
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <span
+          className="mt-3 w-px flex-1"
+          style={{
+            height: '2.5rem',
+            background:
+              'linear-gradient(to bottom, color-mix(in srgb, #e08a63 calc(var(--hl) * 100%), rgba(132,123,110,0.25)), transparent)',
+          }}
+        />
+      </div>
+
+      <p className="max-w-4xl text-balance font-serif text-3xl font-light leading-tight tracking-tightest transition-colors sm:text-4xl md:text-6xl">
+        <span
+          style={{ color: 'rgb(244 239 230 / calc(0.4 + var(--hl) * 0.6))' }}
+        >
+          {lead}
+        </span>{' '}
+        <span
+          className="italic"
+          style={{
+            color: 'color-mix(in srgb, #e08a63 calc(var(--hl) * 100%), #847b6e)',
+          }}
+        >
+          {rest}
+        </span>
+      </p>
+    </div>
   );
 }

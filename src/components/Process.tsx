@@ -144,12 +144,10 @@ function ProcessStep({ step, index }: { step: Step; index: number }) {
   return (
     <li
       ref={ref}
-      className={`relative pl-14 md:grid md:grid-cols-2 md:gap-16 md:pl-0 ${
-        left ? '' : 'md:[direction:rtl]'
-      }`}
+      className="relative pl-14 md:grid md:grid-cols-2 md:items-center md:gap-16 md:pl-0"
     >
       {/* Nodo */}
-      <div className="absolute left-[13px] top-1 md:left-1/2 md:-translate-x-1/2">
+      <div className="absolute left-[13px] top-1 z-10 md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
         <div
           className={`relative grid h-[18px] w-[18px] place-items-center rounded-full border-2 transition-all duration-700 ease-assemble ${
             active
@@ -157,15 +155,14 @@ function ProcessStep({ step, index }: { step: Step; index: number }) {
               : 'border-indigo bg-paper-50 construction-hatch'
           }`}
         >
-          {active && (
-            <span className="h-1.5 w-1.5 rounded-full bg-paper" />
-          )}
+          {active && <span className="h-1.5 w-1.5 rounded-full bg-paper" />}
         </div>
       </div>
 
+      {/* Contenido */}
       <div
-        className={`md:[direction:ltr] ${
-          left ? 'md:pr-16 md:text-right' : 'md:col-start-2 md:pl-16'
+        className={`md:row-start-1 ${
+          left ? 'md:col-start-1 md:pr-16 md:text-right' : 'md:col-start-2 md:pl-16'
         }`}
       >
         <div
@@ -187,6 +184,31 @@ function ProcessStep({ step, index }: { step: Step; index: number }) {
         >
           {step.body}
         </p>
+      </div>
+
+      {/* Lado opuesto: número fantasma + estado (solo desktop) */}
+      <div
+        aria-hidden
+        className={`hidden md:row-start-1 md:flex md:items-center md:gap-5 ${
+          left
+            ? 'md:col-start-2 md:justify-start md:pl-16'
+            : 'md:col-start-1 md:flex-row-reverse md:justify-start md:pr-16'
+        }`}
+      >
+        <span
+          className={`font-serif text-7xl font-extralight leading-none transition-colors duration-700 lg:text-8xl ${
+            active ? 'text-terracotta/15' : 'text-indigo/10'
+          }`}
+        >
+          {step.n}
+        </span>
+        <span
+          className={`font-mono text-[10px] uppercase tracking-[0.22em] transition-colors duration-700 ${
+            active ? 'text-terracotta/70' : 'text-indigo/50'
+          }`}
+        >
+          {active ? 'terminado' : 'en construcción'}
+        </span>
       </div>
     </li>
   );
