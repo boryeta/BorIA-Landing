@@ -10,6 +10,11 @@ export interface Project {
   accentSoft: string;
   /** URL de demo en vivo, si la hay. */
   url?: string;
+  /**
+   * Captura real del proyecto (en /public/projects/). Si falta, la tarjeta usa
+   * el tratamiento abstracto/de construcción. Sustituir por imágenes reales.
+   */
+  image?: string;
   tags: string[];
 }
 
@@ -28,6 +33,8 @@ export const PROJECTS: Project[] = [
     accent: '#c8a04a', // dorado
     accentSoft: 'rgba(200,160,74,0.16)',
     url: 'https://bisturidemoweb.lovable.app',
+    // [PENDIENTE: subir captura real a public/projects/bisturi.jpg]
+    image: '/projects/bisturi.jpg',
     tags: ['Animación 3D', 'Carta interactiva', 'Estética editorial'],
   },
   {
@@ -40,6 +47,8 @@ export const PROJECTS: Project[] = [
     accent: '#c65f3c', // terracota
     accentSoft: 'rgba(198,95,60,0.16)',
     // [PENDIENTE: URL en vivo de QLinaria Catering si quieres enlazarla]
+    // [PENDIENTE: subir captura real a public/projects/catering.jpg]
+    // image: '/projects/catering.jpg',
     tags: ['Conversión', 'Copywriting', 'Marca hermana'],
   },
   {
@@ -51,6 +60,9 @@ export const PROJECTS: Project[] = [
     status: 'wip',
     accent: '#d98a2b', // ámbar
     accentSoft: 'rgba(217,138,43,0.16)',
+    // En curso: se mantiene la trama de construcción. Si quieres mostrar un
+    // avance real, descomenta y sube la captura.
+    // image: '/projects/adaira.jpg',
     tags: ['Modelo 3D', 'Calculadora en vivo', 'En curso'],
   },
 ];

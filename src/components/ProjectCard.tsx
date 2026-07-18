@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import {
   motion,
   useMotionValue,
@@ -19,6 +19,9 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
   const { isTouch } = useDeviceCapability();
+  // Si la captura aún no existe (404), caemos al tratamiento abstracto.
+  const [imgFailed, setImgFailed] = useState(false);
+  const showImage = Boolean(project.image) && !imgFailed;
 
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
@@ -77,7 +80,21 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         className="relative aspect-[16/10] w-full overflow-hidden"
         style={{ background: isWip ? '#f0ebe0' : project.accentSoft }}
       >
-        {isWip ? (
+        {showImage ? (
+          // Captura real del proyecto.
+          <>
+            <img
+              src={project.image}
+              alt={`Vista previa de ${project.name}`}
+              loading="lazy"
+              decoding="async"
+              onError={() => setImgFailed(true)}
+              className="absolute inset-0 h-full w-full scale-[1.02] object-cover object-top transition-transform duration-700 ease-drift group-hover:scale-[1.06]"
+            />
+            {/* Velo inferior para legibilidad del badge y del acento */}
+            <div className="absolute inset-0 bg-gradient-to-t from-graphite-900/45 via-transparent to-transparent" />
+          </>
+        ) : isWip ? (
           // Tratamiento honesto «en construcción»: trama índigo, no miniatura pulida.
           <div className="construction-hatch absolute inset-0 opacity-90" />
         ) : (
